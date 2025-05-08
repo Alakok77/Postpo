@@ -1,12 +1,8 @@
 const express = require('express')
+const db = require('../db/db')
+const dayjs = require('dayjs')
 
 const router = express.Router()
-
-allPost = [
-    {id: 1, title: "test1", from:"me",  createdAt:"14 April 2022", commentsCount:1},
-    {id: 2, title: "test2", from:"me",  createdAt:"14 April 2022", commentsCount:1},
-    {id: 3, title: "test3", from:"me",  createdAt:"14 April 2022", commentsCount:1},
-]
 
 router.get('/new', (req, res) => {
     res.render('newpost')
@@ -16,11 +12,37 @@ router.post('/new', (req, res) => {
     
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
     const {id} = req.params
-    const onePost = allPost.find(post => post.id === +id)
-    const customTitle = !!onePost ? `${onePost.title} | ` : 'ไม่พบเนื้อหา | '
-    res.render('post', {onePost, customTitle})
+    
+    let onePost = null
+    let postComment = []
+
+    try{
+        const tempPost = await db
+                    .select('*')
+                    .from('post')
+                    .where('post.id', +id)
+        onePost = tempPost[0]
+        onePost.created_at_text = dayjs(onePost.created_at).format('D MMM YYYY - HH:mm')
+
+        postComment = await db
+                    .select('*')
+                    .from('comment')
+                    .where('post_id', +id)
+                
+        postComment = postComment.map(post => {
+                    const created_at_text = dayjs(post.created_at).format('D MMM YYYY - HH:mm')
+                    return {...post, created_at_text}
+                })
+
+    } catch (err){
+        console.error(err)
+    }
+
+
+    const customTitle = !!onePost ? `${onePost.title} | ` : 'ไม่พบโพสต์ | '
+    res.render('post', {onePost, customTitle, postComment})
 })
 
 module.exports = router
