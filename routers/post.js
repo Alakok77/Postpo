@@ -8,8 +8,36 @@ router.get('/new', (req, res) => {
     res.render('newpost')
 })
 
-router.post('/new', (req, res) => {
+router.post('/new', async (req, res) => {
+    const {title, content, from, accepted} = req.body
+
+    console.log(from)
+
+    try {
+        
+        if (!title || !content || !from){
+            throw new Error('no text')
+        } else if (accepted != 'on'){
+            throw new Error('no accepted')
+        }
+
+        await db.insert({title, content, from}).into('post')
     
+    } catch (err) {
+        console.error(err)
+
+        let errorMessage = 'error something'
+
+        if (err.message === 'no text'){
+            errorMessage = 'กรุณากรอกข้อมูลให้ครบ'
+        } else if (err.message === 'no accepted'){
+            errorMessage = 'กดติ๊กถูกก่อนจ้า'
+        } 
+
+        return res.render('newpost', {errorMessage, values: {title, content, from, accepted}})
+    }
+
+    res.redirect('/post/new/done')
 })
 
 router.get('/:id', async (req, res) => {
@@ -43,6 +71,10 @@ router.get('/:id', async (req, res) => {
 
     const customTitle = !!onePost ? `${onePost.title} | ` : 'ไม่พบโพสต์ | '
     res.render('post', {onePost, customTitle, postComment})
+})
+
+router.get('/new/done', (req, res) => {
+    res.render('hello')
 })
 
 module.exports = router
