@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> baseHead customTitle=customTitle}}
+<body>
+    {{> siteHeader}}
+    
+    {{#if onePost}}
+        <div>
+            <h2>{{onePost.title}}</h2>
+            <p>
+                <span>{{onePost.from}} | </span>
+                <span>{{onePost.createdAt}}</span>
+            </p>
+        </div>
+    {{else}}
+        <p>ไม่มีใครโพดโพเรื่องนี้</p>
+    {{/if }}
+    {{> siteFooter}}
+</body>
+</html>

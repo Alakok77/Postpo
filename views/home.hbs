@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> baseHead }}
+<body>
+    {{> siteHeader}}
+
+    <div>
+        <h2>สวัสดีชาวโพดโพ</h2>
+        <p>มาหาเรื่องคุยกันดีกว่า</p>
+    </div>
+
+    {{#each allPost}}
+        <div>
+            <h4><a href="/post/{{ this.id }}">{{ this.title }}</a></h4>
+            <p>
+                <span>{{this.from}} | </span>
+                <span>{{this.createdAt}}</span>
+            </p>
+            {{#if this.commentsCount}}
+                <p>{{this.commentsCount}} โพดโพ</p>
+            {{else}}
+                <p>ยังไม่มีใครมาโพดโพด้วยนะ</p>
+            {{/if}}
+        </div>
+    {{/each}}
+
+    {{> siteFooter}}
+</body>
+</html>
