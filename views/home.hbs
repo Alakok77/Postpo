@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 {{> baseHead }}
-<link rel="stylesheet" href="../static/test.css">
+<head>
+    <link rel="stylesheet" href="/static/css/test.css">
+</head>
 <body>
     {{> siteHeader}}
 
-    <div>
+    <div class="title">
         <h2>สวัสดีชาวโพดโพ</h2>
         <p>มาหาเรื่องคุยกันดีกว่า</p>
     </div>
 
     {{#each allPost}}
-        <div>
+        <div class="card">
             <h4><a href="/post/{{ this.id }}">{{ this.title }}</a></h4>
             <p>
                 <span>{{this.from}} | </span>
                 <span>{{this.created_at_text}}</span>
             </p>
             {{#if this.commentsCount}}
-                <p>{{this.commentsCount}} โพดโพ</p>
+                <p class="comment">{{this.commentsCount}} โพดโพ</p>
             {{else}}
-                <p>ยังไม่มีใครมาโพดโพด้วยนะ</p>
+                <p class="comment">ยังไม่มีใครมาโพดโพด้วยนะ</p>
             {{/if}}
         </div>
     {{/each}}

@@ -5,7 +5,8 @@
     {{> siteHeader}}
     
     {{#if onePost}}
-        <div>
+    <div class="wrapper">
+        <div class="post-title">
             <h2>{{onePost.title}}</h2>
             <p>
                 <span>{{onePost.from}} | </span>
@@ -17,12 +18,12 @@
         <hr>
         <form action="/post/{{ onePost.id }}/comment" method="post">
             <p>
-                <textarea name="content" placeholder="โพดโพของคุณ">{{values.content}}</textarea>
+                <textarea name="content" placeholder="โพดโพของคุณ" class="content">{{values.content}}</textarea>
             </p> 
             <p>
-                <input type="text" name="from" placeholder="จากคุณ" value="{{values.from}}">
+                <input type="text" name="from" placeholder="จากคุณ" value="{{values.from}}" class="from">
             </p>
-            <p>
+            <p class="checkbox-box">
                 <input type="checkbox" name="accepted" id="accepted">
                 <label for="accepted">คุณจะยอมรับให้โพดโพฉบับนี้ของคุณออกสู่สาธารณะมั้ย</label>
             </p>
@@ -33,27 +34,26 @@
         </form>
         <hr>
 
-        {{#if postComment}}
-            <p>{{postComment.length}} โพดโพ</p>
-            {{#each postComment}}
-                <div>
-                    <p>
-                        <span>{{this.from}} | </span>
-                        <span>{{this.created_at_text}}</span>
-                    </p>
-                    <p>{{this.content}}</p>
-                </div>
-            {{/each}}
+        <div class="comment-wrapper">
+            {{#if postComment}}
+                <p class="count">{{postComment.length}} โพดโพ</p>
+                {{#each postComment}}
+                    <div class="comment-box">
+                        <p>
+                            <span>{{this.from}} | </span>
+                            <span>{{this.created_at_text}}</span>
+                        </p>
+                        <p>{{this.content}}</p>
+                    </div>
+                {{/each}}
+            {{else}}
+                <p>ยังไม่มีใครมาเลย คุณอยากเริ่มการโพดโพมั้ย</p>
+            {{/if}}
+        </div>
         {{else}}
-            <p>ยังไม่มีใครมาเลย คุณอยากเริ่มการโพดโพมั้ย</p>
-        {{/if}}
-
-    {{else}}
-        <p>ไม่มีใครโพดโพเรื่องนี้</p>
-    {{/if }}
-
-    
-    
+            <p>ไม่มีใครโพดโพเรื่องนี้</p>
+        {{/if }}      
+    </div>
     {{> siteFooter}}
 </body>
 </html>

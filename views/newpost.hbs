@@ -3,20 +3,22 @@
 {{> baseHead customTitle='สร้างโพสต์ใหม่ | '}}
 <body>
     {{> siteHeader}}
-    <div>
-        <h2>สร้างโพสต์ใหม่</h2>
-        <p>มาเริ่มโพดโพกัน</p>
+    <div class="wrapper">
+        <div class="title-text">
+            <h2>สร้างโพสต์ใหม่</h2>
+            <p>มาเริ่มโพดโพกัน</p>
+        </div>
         <form action="/post/new" method="post">
             <p>
-                <input type="text" name="title" placeholder="หัวข้อ" value='{{values.title}}'>
+                <input type="text" name="title" placeholder="หัวข้อ" value='{{values.title}}' class="title">
             </p>
             <p>
-                <textarea name="content" placeholder="เนื้อหา">{{values.content}}</textarea>
+                <textarea name="content" placeholder="เนื้อหา" class="content">{{values.content}}</textarea>
             </p> 
             <p>
-                <input type="text" name="from" placeholder="จากคุณ" value="{{values.from}}">
+                <input type="text" name="from" placeholder="จากคุณ" value="{{values.from}}" class="from">
             </p>
-            <p>
+            <p class="checkbox-box">
                 <input type="checkbox" name="accepted" id="accepted">
                 <label for="accepted">คุณจะยอมรับให้โพดโพฉบับนี้ของคุณออกสู่สาธารณะมั้ย</label>
             </p>
